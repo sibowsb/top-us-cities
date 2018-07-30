@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Most Populated US Cities</title>
+	<meta name="author" content="Sibo Wang" />
+	<meta name="description" content="Visualizing the population of top US cities." />
+	<meta name="Resource-type" content="Document" />
+
+	<link rel="stylesheet" type="text/css" href="style/fullpage.css" />
+	<link rel="stylesheet" type="text/css" href="style/fullpage_example_stylesheet.css" />
+  <link rel="stylesheet" type="text/css" href="style/map_styles.css" />
+
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+  <script src="https://d3js.org/topojson.v1.min.js"></script>
+  <script src="src/d3-tip.js"></script>
+  <script src="src/color_util.js"></script>
+  <script src="https://d3js.org/d3-color.v1.min.js"></script>
+  <script src="https://d3js.org/d3-interpolate.v1.min.js"></script>
+  <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.25.6/d3-legend.js"></script>
+
+  <script>
+  var isFirefox = typeof InstallTrigger !== 'undefined';
+  if (isFirefox) {
+    window.alert("You are using Firefox. \n\n" +
+                 "Due to a known Firefox bug that causes incompatibility " +
+                 "with some D3 plugins, the tooltips in this site might not " +
+                 "display normally. \n\n" +
+                 "Click 'OK' to continue anyway.")
+  }
+  </script>
+	<!--[if IE]>
+		<script type="text/javascript">
+			 var console = { log: function() {} };
+		</script>
+  <![endif]-->
+
+  <style>
+    .about_text {
+      padding: 100px;
+      text-align: left;
+      font-size: 26px;
+      color: white;
+    }
+  </style>
+</head>
+
+<body>
+
+
+<div id="fullpage">
+
+  <!-- ABOUT PAGE -->
+  <div class="section" id="section0">
+    <div class="slide" id="slide1">
+    <div class="intro">
+      <h1>About the Visualization</h1>
+      <p>
+        This project visualizes the largest 1000 US cities by population,
+        particularly how they are spatially distributed and if the absolute
+        population has any correlation with the rate of growth.
+      </p>
+    </div>
+    </div>
+    <div class="slide" id="slide1">
+      <h2 style="color: white; font-size: 40px; font-weight:700">Narrative Layout</h2>
+      <p class="about_text">
+        This site uses the Interactive Slideshow layout. The visualization
+        is split into scenes, in either of which the user can proactively
+        explore further information.
+      </p>
+    </div>
+
+    <div class="slide" id="slide2">
+      <h2 style="color: white; font-size: 40px; font-weight:700">Scenes</h2>
+      <p class="about_text">
+        The site has two scenes, each conveying one main message.<br><br>
+
+        The first
+        scene demostrates the spatial distribution of the cities, showing that
+        1) the cities are mostly on the east and west coast; and 2) few cities
+        (such as NYC and LA are an orders of magnitude larger than the most
+        majority of cities). <br><br>
+
+        The second scene shows that 1) overall there is a
+        very weak possitive correlation between the city size and the rate of
+        growth, meaning that large cities get even larger faster; and 2) on
+        the other hand, the few cities that grow remarkably fast are aways
+        smaller in size in the first place.
+      </p>
+    </div>
+
+    <div class="slide" id="slide3">
+      <h2 style="color: white; font-size: 40px; font-weight:700">Annotations</h2>
+      <p class="about_text">
+        Annotations, such as legends, explainatory text, and tooltip labels,
+        help the readers understand the message. <br><br>
+        In particular, the explainatory text on each scene explicitly conveys
+        the idea. An info box appears when the user hovers the mouse over each
+        data point, displaying more information about the city.
+      </p>
+    </div>
+
+    <div class="slide" id="slide4">
+      <h2 style="color: white; font-size: 40px; font-weight:700">Parameters</h2>
+      <p class="about_text">
+        Parameters, namely the selection of state in the map, allows the user
+        refine the scope of visualization. <br><br>
+        Due to the small display size of smaller cities, it can be hard to
+        identify and select some cities. The large display size of huge cities
+        also makes nearby smaller cities hard to see. <br><br>
+        Therefore, this site allows the user to zoom in to each state, which is
+        achieved by making the selected state a parameter.
+
+      </p>
+    </div>
+
+    <div class="slide" id="slide5">
+      <h2 style="color: white; font-size: 40px; font-weight:700">Triggers</h2>
+      <p class="about_text">
+        Finally, this site uses trigers, such as clicking the state outlines
+        and hovering the mouse over the data points, to initiate actions. The
+        two actions respectively zoom in the displayed map and pop up an info
+        box showing more details.
+      </p>
+    </div>
+
+    <div class="slide" id="slide6">
+      <h2 style="color: white; font-size: 40px; font-weight:700">Data</h2>
+      <p class="about_text">
+        The city data are available from
+        <a href="https://gist.github.com/Miserlou/11500b2345d3fe850c92">
+          GitHub user Miserlou
+        </a>. <br><br>
+        The geolocation data are provided by
+        <a href="https://simplemaps.com/data/us-cities">
+          SimpleMaps
+        </a>.
+      </p>
+    </div>
+  </div>
+
+  <!-- MAIN PAGE  -->
+	<div class="section active" id="section1">
+		<div class="intro">
+			<h1 style="font-weight: 900;">Most Populated US Cities</h1>
+			<p style="font-size:120%; margin-top:15px;">
+        CS 498 Data Visualization Final Project
+      </p>
+      <p style="font-size:120%; margin-top:10px;">
+        Sibo Wang
+      </p>
+      <p style="font-size:120%; margin-top:10px;">
+        July 29, 2018
+      </p>
+      <p style="font-size:120%; margin-top:10px;">
+        <br><a href="/#about">About Visualization</a>
+      </p>
+		</div>
+	</div>
+
+  <!-- SPATIAL MAP -->
+	<div class="section" id="section2">
+    <div class="afloat", style="top:30px; left:50px; text-align: left;">
+      <h1 style="font-size: 50px; font-weight: 600;">Spatial Map</h1>
+      <p, class="exp">
+        Spatial distribution of major US cities with population and
+        population change labeled. <br>
+        Click on each state to zoom in. Hover over the dots to see more details.
+      </p>
+    </div>
+
+    <script src="src/spatial_map.js"></script>
+
+	</div>
+
+
+  <!-- CORRELATION -->
+	<div class="section" id="section3">
+    <div class="afloat", style="top:30px; left:50px; text-align: left;">
+      <h1 style="font-size: 50px; font-weight: 600;">
+        Size-Grow Correlation
+      </h1>
+      <p, class="exp">
+        Overall, there is a very weak positive correlation between the
+        current population and the rate of population growth.<br>
+        However, the fastest-growing cities (>100%) are always currently
+        smaller than 200k in population.
+      </p>
+    </div>
+
+    <script src="src/corr.js"></script>
+
+	</div>
+
+
+  </div>
+
+<script type="text/javascript" src="src/fullpage.js"></script>
+<!-- <script type="text/javascript" src="examples.js"></script> -->
+
+<script type="text/javascript">
+    var myFullpage = new fullpage('#fullpage', {
+        licenseKey: 'OPEN-SOURCE-GPLV3-LICENSE',
+        anchors: ['about', 'title', 'map', 'corr'],
+        sectionsColor: ['#75677c', '#3f9182', '#222', '#527760'],
+        navigation: true,
+        navigationPosition: 'right',
+        navigationTooltips: ['About', 'Title', 'Spatial Map', 'Correlation']
+    });
+</script>
+
+</body>
+</html>
