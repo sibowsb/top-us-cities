@@ -1,26 +1,9 @@
-console.log(window.innerWidth, window.innerHeight);
+// console.log(window.innerWidth, window.innerHeight);
 var width = window.innerWidth, height = window.innerHeight;
 var svg = d3.select('#section2')
             .append('svg')
             .attr('width', width)
             .attr('height', height);
-
-// Taken from https://stackoverflow.com/a/34683867/7432468 ------
-function parseColor(color) {
-  var arr=[];
-  color.replace(/[\d+\.]+/g, function(v) {
-    arr.push(parseFloat(v));
-  });
-  return {
-    hex: "#" + arr.slice(0, 3).map(toHex).join(""),
-    opacity: arr.length == 4 ? arr[3] : 1
-  };
-}
-function toHex(int) {
-  var hex = int.toString(16);
-  return hex.length == 1 ? "0" + hex : hex;
-}
-// end ---------------------------------------------------------
 
 var centered;
 
@@ -73,7 +56,7 @@ d3.json("data/us.json", function(error, us) {
     // console.log(csv[0]);
 
     var circle = g.selectAll('circle').data(csv);
-    console.log(circle);
+    // console.log(circle);
     circle.enter().append('circle')
       .merge(circle)
       .attr('cx', function(d, i) {

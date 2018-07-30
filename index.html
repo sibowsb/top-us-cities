@@ -15,6 +15,7 @@
   <script src="https://d3js.org/d3.v4.min.js"></script>
   <script src="https://d3js.org/topojson.v1.min.js"></script>
   <script src="src/d3-tip.js"></script>
+  <script src="src/color_util.js"></script>
   <script src="https://d3js.org/d3-color.v1.min.js"></script>
   <script src="https://d3js.org/d3-interpolate.v1.min.js"></script>
   <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
@@ -78,11 +79,22 @@
 	</div>
 
 
-
+  <!-- CORRELATION -->
 	<div class="section" id="section3">
-		<div class="intro">
-			<h1>Enjoy it</h1>
-		</div>
+    <div class="afloat", style="top:30px; left:50px; text-align: left;">
+      <h1 style="font-size: 50px; font-weight: 600;">
+        Size-Grow Correlation
+      </h1>
+      <p, class="exp">
+        Overall, there is a very weak positive correlation between the
+        current population and the rate of population growth.<br>
+        However, the fastest-growing cities (>100%) are always currently
+        smaller than 200k in population.
+      </p>
+    </div>
+
+    <script src="src/corr.js"></script>
+
 	</div>
 
   </div>
@@ -94,7 +106,7 @@
     var myFullpage = new fullpage('#fullpage', {
         licenseKey: 'OPEN-SOURCE-GPLV3-LICENSE',
         anchors: ['about', 'title', 'spatialMap', 'corr'],
-        sectionsColor: ['#C63D0F', '#1BBC9B', '#333', '#7E8F7C'],
+        sectionsColor: ['#C63D0F', '#1BBC9B', '#222', '#7E8F7C'],
         navigation: true,
         navigationPosition: 'right',
         navigationTooltips: ['About', 'Title', 'Spatial Map', 'Correlation']
