@@ -157,4 +157,20 @@ svg.select(".legendQuant")
   .call(legend)
   .style('font-size', '12px')
 
+svg.append("text")
+  .attr("x", 20)
+  .attr("y", window.innerHeight - 90)
+  .attr("fill", "#aaa")
+  .attr("font-size", "12px")
+  .attr("font-weight", 600)
+  .text("City Population");
+
+  svg.append("text")
+    .attr("x", window.innerWidth - 130)
+    .attr("y", window.innerHeight - 140)
+    .attr("fill", "#aaa")
+    .attr("font-size", "12px")
+    .attr("font-weight", 600)
+    .text("2000-2013 Growth");
+
 temp.selectAll('.label').attr('fill', 'gray');
